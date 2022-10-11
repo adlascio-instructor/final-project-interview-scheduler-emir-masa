@@ -1,10 +1,7 @@
 var express = require('express');
 var route = express.Router();
 
-route.get('/', function(req,res) {
-  console.log("hello world")
-  res.send('aaaa')
-})
+
 route.get('/tuesday', function(req,res) {
   res.send('Tuesday')
 })
