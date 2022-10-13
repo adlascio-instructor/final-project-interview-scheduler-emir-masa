@@ -1,7 +1,7 @@
 var express = require('express');
 var route = express.Router();
 
-route.get('/', function(req,res) {
+route.get('/database', function(req,res) {
   console.log("hello world")
   res.send('aaaa')
 })

@@ -73,6 +73,7 @@ export default function Application() {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
+          {/* is this day's components? */}
           <DayList days={days} value={day} onChange={setDay} />
         </nav>
       </section>
