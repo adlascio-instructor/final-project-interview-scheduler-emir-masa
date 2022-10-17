@@ -1,16 +1,30 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import io from 'socket.io-client';
 import "./App.scss";
-
 import DayList from "./components/DayList";
 import Appointment from "./components/Appointment";
-import daysData from "./components/__mocks__/days.json";
 import appointmentsData from "./components/__mocks__/appointments.json";
 
+const socket = io("http://localhost:8080");
+
 export default function Application() {
+  // const [isConnected, setIsConnected] = useState(socket.connected);
   const [day, setDay] = useState("Monday");
-  const [days, setDays] = useState(daysData);
+  const [days, setDays] = useState({});
   const [appointments, setAppointments] = useState(appointmentsData);
+  useEffect(() => {
+    socket.emit('days load');
+    socket.emit('demo');
+
+    socket.on('days load response', (days) => {
+      setDays(JSON.parse(days));
+    });
+
+    return () => {
+      socket.off('connection');
+    };
+  }, []);
+
   function bookInterview(id, interview) {
     console.log(id, interview);
     const isEdit = appointments[id].interview;
@@ -23,6 +37,7 @@ export default function Application() {
         ...prev,
         [id]: appointment,
       };
+
       return appointments;
     });
     if (!isEdit) {
@@ -73,7 +88,6 @@ export default function Application() {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          {/* is this day's components? */}
           <DayList days={days} value={day} onChange={setDay} />
         </nav>
       </section>
