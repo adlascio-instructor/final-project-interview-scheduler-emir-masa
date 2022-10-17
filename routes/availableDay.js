@@ -3,7 +3,7 @@ const days = require("../frontend/src/components/__mocks__/days.json")
 const router = express.Router();
 const { Pool } = require("pq");
 const {response} = require("express");
-const e = require("express");
+
 
 const dbCredentials = {
     user: process.env.DB_USER,
